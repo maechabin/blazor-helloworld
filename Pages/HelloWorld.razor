@@ -1,0 +1,30 @@
+@page "/helloworld"
+
+<div>
+  <h1>@hello @name</h1>
+  <p>@(1 * 2 * 3)</p>
+  <input @bind="name">
+  <button @onclick="handleClick">click</button>
+
+  @if(isDisplay)
+  {
+    <div>display</div>
+  }
+
+  <div>
+    <Child hello="@hello" name="@name" />
+  </div>
+</div>
+
+@inject IJSRuntime js
+
+@code
+{
+  private bool isDisplay = true;
+  private string hello = "Hello";
+  private string name = "name";
+
+  async void handleClick() {
+    await js.InvokeVoidAsync("alert", name);
+  }
+}
